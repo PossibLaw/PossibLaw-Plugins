@@ -1,6 +1,6 @@
 # PossibLaw Plugins
 
-Claude Code plugins built by the PossibLaw team. Licensed under MIT.
+Claude Code plugins built by the PossibLaw team.
 
 ## About PossibLaw
 
@@ -58,7 +58,3 @@ claude plugin install project-vibe --marketplace PossibLaw
 ## What's Next
 
 More plugins are on the way to help legal professionals architect what's next in legal. Stay tuned.
-
-## License
-
-MIT
