@@ -1,0 +1,17 @@
+{
+  "name": "Future-Legal-Plugins",
+  "owner": {
+    "name": "Salvador Carranza",
+    "email": "Salvador@PossibLaw.Com"
+  },
+  "plugins": [
+    {
+      "name": "build-plugin",
+      "source": "./build-plugin-plugin"
+    },
+    {
+      "name": "project-vibe",
+      "source": "./project-vibe"
+    }
+  ]
+}
