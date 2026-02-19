@@ -12,6 +12,10 @@
     {
       "name": "project-vibe",
       "source": "./project-vibe"
+    },
+    {
+      "name": "legal-skills",
+      "source": "./legal-skills"
     }
   ]
 }

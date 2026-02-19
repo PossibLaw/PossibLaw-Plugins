@@ -1,0 +1,33 @@
+{
+  "name": "legal-skills",
+  "version": "1.0.0",
+  "description": "Discovery and access layer for legal professionals to easily find and use skills, tools, and MCP integrations from lawvable.com, case.dev, and midpage.ai",
+  "author": "PossibLaw",
+  "homepage": "https://github.com/PossibLaw/PossibLaw-Plugins",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PossibLaw/PossibLaw-Plugins.git"
+  },
+  "keywords": ["legal", "law", "skills", "tools", "discovery", "catalog"],
+  "commands": [
+    {
+      "name": "legal-search",
+      "description": "Search across lawvable.com skills, case.dev tools, and midpage.ai MCP"
+    },
+    {
+      "name": "legal-tools",
+      "description": "Browse categorized legal tools and resources"
+    },
+    {
+      "name": "legal-skill",
+      "description": "Invoke a specific legal skill by name"
+    }
+  ],
+  "skills": [
+    {
+      "name": "legal-assistant",
+      "description": "Auto-suggests appropriate legal resources during conversations"
+    }
+  ],
+  "license": "MIT"
+}
