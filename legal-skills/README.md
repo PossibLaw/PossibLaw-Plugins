@@ -77,6 +77,18 @@ These catalogs improve speed and resilience. Live results are preferred when ava
 - `docs/agent-contract.md` — cross-agent I/O contract
 - `docs/codex-usage.md` — Codex parity guide
 
+## Using This Workflow in Codex
+
+This repository package is a Claude plugin format. Codex does not install it through Claude's plugin marketplace flow.
+
+To use the same legal workflow in Codex:
+
+1. Configure Agent Skills MCP in Codex:
+   `codex mcp add agentskills --url https://skills.case.dev/api/mcp`
+2. Start a Codex session in your workspace.
+3. Prompt Codex to follow the legal workflow contract in this plugin (top 5 results, ask-selection, ingest, confirm-before-apply).
+4. Use `docs/codex-usage.md` as the operational checklist for behavior parity.
+
 ## Version
 
 1.1.0

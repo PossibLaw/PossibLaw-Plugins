@@ -2,6 +2,11 @@
 
 Claude Code plugins built by the PossibLaw team.
 
+## Runtime Support
+
+- **Claude Code:** Full plugin install support via marketplace (`claude plugin install ...`).
+- **Codex:** Not installable as Claude plugins. Use the plugin docs/workflows directly in Codex, and configure required MCP servers with `codex mcp ...`.
+
 ## About PossibLaw
 
 PossibLaw helps legal professionals become Builders. Architect Legal Professionals who don't just do the work, but design what comes next. AI is rewriting the rules. We help you stay ahead.
@@ -76,3 +81,18 @@ claude plugin install project-vibe --marketplace PossibLaw
 ## What's Next
 
 More plugins are on the way to help legal professionals architect what's next in legal. Stay tuned.
+
+## Using These in Codex
+
+These packages are authored in Claude plugin format, so Codex does not install them with `claude plugin install`.
+
+Use this pattern instead:
+
+1. Open the plugin's workflow docs and run the same process in Codex.
+2. Configure any external MCP dependency in Codex (example for legal skills):
+   `codex mcp add agentskills --url https://skills.case.dev/api/mcp`
+3. In Codex prompts, explicitly request that workflow (example: "Use the legal workflow from this repo and show top 5 skills for contract review").
+
+For legal-skills specifically, see:
+- `legal-skills/docs/codex-usage.md`
+- `legal-skills/docs/agent-contract.md`
