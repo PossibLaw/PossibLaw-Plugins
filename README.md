@@ -32,7 +32,7 @@ claude plugin install guardrails --marketplace PossibLaw
 
 ### legal-skills
 
-Discovery and access layer for legal professionals to easily find and use skills, tools, and MCP integrations. Provides a unified interface to legal resources from lawvable.com, docs.case.dev, and Midpage MCP. Includes commands for searching legal skills (/legal-search), browsing categorized tools (/legal-tools), and directly invoking legal workflows (/legal-skill). Features auto-discovery that suggests relevant resources during legal conversations.
+Single-command legal workflow plugin for novice builders. `/legal` searches Lawvable and Case.dev Agent Skills, returns the top matches, and guides the user through selection, skill ingestion, and confirmation-driven application in-session.
 
 ```bash
 claude plugin install legal-skills --marketplace PossibLaw
@@ -69,6 +69,7 @@ Then install any plugin:
 ```bash
 claude plugin install build-plugin --marketplace PossibLaw
 claude plugin install guardrails --marketplace PossibLaw
+claude plugin install legal-skills --marketplace PossibLaw
 claude plugin install project-vibe --marketplace PossibLaw
 ```
 
