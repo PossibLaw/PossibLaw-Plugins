@@ -37,7 +37,7 @@ claude plugin install guardrails --marketplace PossibLaw
 
 ### legal-skills
 
-Single-command legal workflow plugin for novice builders. `/legal` searches Lawvable and Case.dev Agent Skills, returns the top matches, and guides the user through selection, skill ingestion, and confirmation-driven application in-session.
+Single-command legal retrieval plugin for novice builders. `/legal` now asks users whether to search `Skills`, `ContractCodex`, `SEC EDGAR`, or `All`, then returns either top skill matches or a prompt-ready evidence pack with citations. It includes a runtime entrypoint for tool wrappers: `legal-skills/retrieval/run-search.mjs`.
 
 ```bash
 claude plugin install legal-skills --marketplace PossibLaw
@@ -96,3 +96,4 @@ Use this pattern instead:
 For legal-skills specifically, see:
 - `legal-skills/docs/codex-usage.md`
 - `legal-skills/docs/agent-contract.md`
+- `legal-skills/retrieval/README.md`
