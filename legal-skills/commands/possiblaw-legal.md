@@ -19,14 +19,14 @@ Single entrypoint for novice-friendly legal context retrieval and skill applicat
 ## Goal
 
 Help users quickly get better prompt context through one command by:
-1. Asking what to search (`Skills`, `ContractCodex`, `SEC`, `All`).
+1. Asking what to search first (`Skills`, `ContractCodex`, `SEC`, `All`).
 2. Retrieving and ranking evidence from selected sources.
 3. Returning a prompt-ready evidence pack with citations.
 4. Preserving existing top-5 skill selection flow when `Skills` is selected.
 
 ## Source Picker (always ask)
 
-Ask this after query resolution:
+Ask this immediately (before any free-form query prompt):
 
 "Which source scope do you want?
 1) Skills (how the agent should act)
@@ -117,13 +117,17 @@ type PromptReadyPack = {
 
 ## Workflow
 
-### Step 1: Resolve query
-- If `$ARGUMENTS` is empty, ask: "What legal task or clause do you want context for?"
-- Use answer as `query`.
-
-### Step 2: Ask source picker
-- Always ask the source picker question above.
+### Step 1: Ask source picker first
+- Always ask the source picker question above at the start.
 - Save selected `sourceScope`.
+
+### Step 2: Resolve query with source-specific prompt
+- If `$ARGUMENTS` is present, use it as `query`.
+- If `$ARGUMENTS` is empty, ask based on selected source:
+  - `skills`: "What legal workflow do you want the agent to run? (example: contract review checklist)"
+  - `contractcodex`: "What clause or contract pattern should I find in ContractCodex exemplars?"
+  - `sec`: "What clause/exhibit context do you want from SEC filings? Include company/ticker if known."
+  - `all`: "What legal task or clause should I search across skills, ContractCodex, and SEC?"
 
 ### Step 3A: If `sourceScope = skills`
 Run legacy skill discovery flow:

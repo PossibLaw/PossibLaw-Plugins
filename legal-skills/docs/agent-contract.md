@@ -10,11 +10,11 @@ Defines the shared I/O contract for `/possiblaw-legal` across agents.
 ## Input
 
 - `query?: string`
-- If missing, the agent must prompt for task/clause text.
+- Agent must ask source picker first, then prompt for source-specific query if missing.
 
 ## Source Picker Contract
 
-After query resolution, agent must ask source scope:
+Agent must ask source scope before query resolution:
 
 1. `skills` - agent behavior and legal workflow skills.
 2. `contractcodex` - exemplar contracts and clauses.

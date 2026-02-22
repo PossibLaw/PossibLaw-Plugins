@@ -18,16 +18,17 @@ Examples:
 
 ## What `/possiblaw-legal` Does
 
-1. Asks what source scope to use:
+1. Asks source scope first:
    - `Skills`
    - `ContractCodex`
    - `SEC`
    - `All`
-2. Searches selected sources with live + fallback retrieval.
-3. Returns either:
+2. Asks a source-specific query prompt (unless query argument was provided).
+3. Searches selected sources with live + fallback retrieval.
+4. Returns either:
    - Top-5 skills (when scope=`Skills`), or
    - Prompt-ready evidence pack with citations.
-4. Asks how to refine results.
+5. Asks how to refine results.
 
 ## Prompt-Ready Pack Fields
 

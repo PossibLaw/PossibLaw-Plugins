@@ -8,22 +8,22 @@ Use one novice-friendly command in Codex to retrieve legal context from Skills, 
 
 ## Standard Flow
 
-1. Gather query (`/possiblaw-legal` argument equivalent).
-2. If missing, ask user for legal task or clause text.
-3. Ask source picker:
+1. Ask source picker first:
    - `skills`
    - `contractcodex`
    - `sec`
    - `all`
-4. Run selected source adapters.
-5. Normalize to `ContextRecord`.
-6. Chunk (500-900 chars, 120 overlap).
-7. Rank with hybrid scoring.
-8. Return either:
+2. Resolve query:
+   - Use command argument if provided, otherwise ask source-specific query prompt.
+3. Run selected source adapters.
+4. Normalize to `ContextRecord`.
+5. Chunk (500-900 chars, 120 overlap).
+6. Rank with hybrid scoring.
+7. Return either:
    - Skills mode top-5 candidate list, or
    - Prompt-ready evidence pack.
-9. Ask refinement prompt.
-10. Re-confirm before any side effects.
+8. Ask refinement prompt.
+9. Re-confirm before any side effects.
 
 ## Output Requirements
 

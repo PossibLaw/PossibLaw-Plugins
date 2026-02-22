@@ -31,12 +31,12 @@ Examples:
 
 ## Workflow
 
-1. If query is missing, ask what legal task or clause needs context.
-2. Ask source picker:
+1. Ask source picker first:
    - `Skills`
    - `ContractCodex`
    - `SEC`
    - `All`
+2. Ask a source-specific query prompt (or use provided query argument).
 3. Run selected source retrieval with live + fallback catalogs.
 4. Normalize, chunk, and rank evidence.
 5. Return either:
@@ -134,4 +134,4 @@ To use the same workflow in Codex:
 
 ## Version
 
-1.3.0
+1.3.1
