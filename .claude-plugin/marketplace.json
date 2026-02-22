@@ -6,19 +6,19 @@
   },
   "plugins": [
     {
-      "name": "build-plugin",
+      "name": "possiblaw-build-plugin",
       "source": "./build-plugin"
     },
     {
-      "name": "guardrails",
+      "name": "possiblaw-guardrails",
       "source": "./guardrails"
     },
     {
-      "name": "legal-skills",
+      "name": "possiblaw-legal",
       "source": "./legal-skills"
     },
     {
-      "name": "project-vibe",
+      "name": "possiblaw-vibe",
       "source": "./project-vibe"
     }
   ]

@@ -402,7 +402,7 @@ guardrails/
 - `${CLAUDE_PLUGIN_ROOT}` for portable script paths
 - PostToolUse auto-formatting (detects Prettier, Ruff, Black) with `suppressOutput: true`
 
-**Install:** `claude plugin install guardrails --marketplace PossibLaw`
+**Install:** `claude plugin install possiblaw-guardrails --marketplace PossibLaw`
 
 ### Hookify Format Examples
 

@@ -5,7 +5,7 @@ General-purpose safety hooks for Claude Code. Blocks destructive commands, prote
 ## Installation
 
 ```bash
-claude plugin install guardrails --marketplace PossibLaw
+claude plugin install possiblaw-guardrails --marketplace PossibLaw
 ```
 
 ## What's Protected
@@ -47,7 +47,7 @@ To activate Tier 2 hooks, merge them into your hooks configuration or symlink th
 ```bash
 # Option 1: Copy Tier 2 hooks into your project's .claude/settings.json
 # Option 2: Symlink for automatic updates
-ln -s "$(claude plugin path guardrails)/hooks/tier2-hooks.json" .claude/tier2-hooks.json
+ln -s "$(claude plugin path possiblaw-guardrails)/hooks/tier2-hooks.json" .claude/tier2-hooks.json
 ```
 
 ### Tier 2 Hook Reference

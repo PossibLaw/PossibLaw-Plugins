@@ -24,7 +24,7 @@ We're ReCoding the Vibe in legal.
 Interactive plugin builder for Claude Code. Use `/possiblaw-build-plugin` to launch guided plugin creation. It asks targeted questions to determine the right extensibility mechanism — CLAUDE.md files, skills, commands, hooks, or agents — then generates properly structured files following documented patterns.
 
 ```bash
-claude plugin install build-plugin --marketplace PossibLaw
+claude plugin install possiblaw-build-plugin --marketplace PossibLaw
 ```
 
 ### guardrails
@@ -32,7 +32,7 @@ claude plugin install build-plugin --marketplace PossibLaw
 General-purpose safety hooks for Claude Code. Blocks destructive commands (`rm -rf`, `sudo rm`, `curl | bash`, force-push to main), protects sensitive files (`.env`, SSH keys, credentials), auto-formats code after writes, and validates task completion before sessions end. Ships with a curated blacklist and escalation prompts for risky-but-not-fatal commands.
 
 ```bash
-claude plugin install guardrails --marketplace PossibLaw
+claude plugin install possiblaw-guardrails --marketplace PossibLaw
 ```
 
 ### legal-skills
@@ -40,7 +40,7 @@ claude plugin install guardrails --marketplace PossibLaw
 Single-command legal retrieval plugin for novice builders. `/possiblaw-legal` now asks users whether to search `Skills`, `ContractCodex`, `SEC EDGAR`, or `All`, then returns either top skill matches or a prompt-ready evidence pack with citations. It includes a runtime entrypoint for tool wrappers: `legal-skills/retrieval/run-search.mjs`.
 
 ```bash
-claude plugin install legal-skills --marketplace PossibLaw
+claude plugin install possiblaw-legal --marketplace PossibLaw
 ```
 
 ### project-vibe
@@ -48,7 +48,7 @@ claude plugin install legal-skills --marketplace PossibLaw
 Discovery-first project planning for non-coders. Use `/possiblaw-vibe` to guide goal definition, budget constraints, and tech stack selection, then generate a complete dev environment with docs, helper scripts, and a debugging agent.
 
 ```bash
-claude plugin install project-vibe --marketplace PossibLaw
+claude plugin install possiblaw-vibe --marketplace PossibLaw
 ```
 
 ## Getting Started
@@ -72,10 +72,10 @@ claude plugin marketplace add --source github --repo PossibLaw/PossibLaw-Plugins
 Then install any plugin:
 
 ```bash
-claude plugin install build-plugin --marketplace PossibLaw
-claude plugin install guardrails --marketplace PossibLaw
-claude plugin install legal-skills --marketplace PossibLaw
-claude plugin install project-vibe --marketplace PossibLaw
+claude plugin install possiblaw-build-plugin --marketplace PossibLaw
+claude plugin install possiblaw-guardrails --marketplace PossibLaw
+claude plugin install possiblaw-legal --marketplace PossibLaw
+claude plugin install possiblaw-vibe --marketplace PossibLaw
 ```
 
 ## What's Next

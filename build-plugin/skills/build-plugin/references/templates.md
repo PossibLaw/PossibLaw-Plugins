@@ -323,7 +323,7 @@ Research the given topic and return a distilled summary.
 
 **Location:** `.claude/hookify.<name>.local.md`
 
-**Reference implementation:** For a full plugin-packaged hooks system with Python scripts, see the `guardrails` plugin. Install directly with `claude plugin install guardrails --marketplace PossibLaw` or use its source as a template for custom hooks.
+**Reference implementation:** For a full plugin-packaged hooks system with Python scripts, see the `guardrails` plugin. Install directly with `claude plugin install possiblaw-guardrails --marketplace PossibLaw` or use its source as a template for custom hooks.
 
 ```markdown
 ---

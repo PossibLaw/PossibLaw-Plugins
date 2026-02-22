@@ -294,7 +294,7 @@ For safety-critical rules:
 2. Implement as Hook (machine enforced)
 3. Both work together - CLAUDE.md explains why, hook enforces
 
-**Reference implementation:** The `guardrails` plugin (`claude plugin install guardrails --marketplace PossibLaw`) demonstrates this pattern with production-ready hooks for destructive command blocking, sensitive file protection, and auto-formatting. Use it as a starting point or install it directly.
+**Reference implementation:** The `guardrails` plugin (`claude plugin install possiblaw-guardrails --marketplace PossibLaw`) demonstrates this pattern with production-ready hooks for destructive command blocking, sensitive file protection, and auto-formatting. Use it as a starting point or install it directly.
 
 ### The Progressive Disclosure Pattern
 
