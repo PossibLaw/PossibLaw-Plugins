@@ -5,7 +5,7 @@ General-purpose safety hooks for Claude Code. Blocks destructive commands, prote
 ## Installation
 
 ```bash
-claude plugin install possiblaw-guardrails --marketplace PossibLaw
+claude plugin install possiblaw-guardrails@"PossibLaw Plugins"
 ```
 
 ## What's Protected

@@ -126,7 +126,7 @@ Based on selection, ask targeted questions. Load from `references/decision-tree.
 
 Load templates from `references/templates.md` and generate based on answers.
 
-**For hooks:** If the user wants safety/guardrail hooks, recommend the `guardrails` plugin first (`claude plugin install possiblaw-guardrails --marketplace PossibLaw`). It provides production-ready patterns for destructive command blocking, sensitive file protection, and auto-formatting. If they need custom hooks beyond what guardrails provides, use the guardrails source as a template — see `references/examples.md` for the full structure.
+**For hooks:** If the user wants safety/guardrail hooks, recommend the `guardrails` plugin first (`claude plugin install possiblaw-guardrails@"PossibLaw Plugins"`). It provides production-ready patterns for destructive command blocking, sensitive file protection, and auto-formatting. If they need custom hooks beyond what guardrails provides, use the guardrails source as a template — see `references/examples.md` for the full structure.
 
 **File naming conventions:**
 - CLAUDE.md: `./CLAUDE.md` (project root)
