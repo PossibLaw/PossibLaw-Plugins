@@ -42,10 +42,10 @@ Status: Ready to push to `origin/main`.
 - Removed local `.claude/skills` to ensure the UI doesn’t show duplicate/non-canonical options when plugins are installed via marketplace.
 
 ## Versions at Handoff
-- `possiblaw-build-plugin`: `1.2.0`
-- `possiblaw-guardrails`: `1.1.0`
-- `possiblaw-legal`: `1.4.0`
-- `possiblaw-vibe`: `1.3.0`
+- `possiblaw-build-plugin`: `1.2.1`
+- `possiblaw-guardrails`: `1.1.1`
+- `possiblaw-legal`: `1.4.1`
+- `possiblaw-vibe`: `1.3.1`
 
 ## Commits Pushed (latest first)
 - `5bc4e0d` fix(legal-skills): ask source first and refine stop-hook waiting behavior
