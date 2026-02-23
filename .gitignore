@@ -4,3 +4,6 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+HANDOFF.md
+TROUBLESHOOTING.md
+.claude/history.md
