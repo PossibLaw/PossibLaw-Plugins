@@ -42,19 +42,19 @@ Status: Ready to push to `origin/main`.
 - Removed local `.claude/skills` to ensure the UI doesn’t show duplicate/non-canonical options when plugins are installed via marketplace.
 
 ### 6) Single command namespace
-- Added the `possiblaw` umbrella plugin to provide canonical `/possiblaw:*` command entrypoints:
-  - `/possiblaw:build-plugin`
-  - `/possiblaw:guardrails`
-  - `/possiblaw:legal`
-  - `/possiblaw:vibe-coding`
-- Removed per-plugin `commands/` so installed plugin commands no longer appear as `/possiblaw-*:possiblaw-*`.
+UNCONFIRMED: Claude Code does not currently support re-namespacing commands across multiple plugins into a single `/possiblaw:*` prefix without changing plugin IDs/marketplace naming. On macOS default (case-insensitive) filesystems, a plugin named `possiblaw` collides with the `PossibLaw` marketplace cache directory and fails to install.
+
+Implemented alternative: short, consistent per-plugin command names:
+- `/possiblaw-build-plugin:build-plugin`
+- `/possiblaw-guardrails:guardrails`
+- `/possiblaw-legal:legal`
+- `/possiblaw-vibe:vibe-coding`
 
 ## Versions at Handoff
-- `possiblaw`: `1.0.0`
-- `possiblaw-build-plugin`: `1.2.2`
-- `possiblaw-guardrails`: `1.1.2`
-- `possiblaw-legal`: `1.4.2`
-- `possiblaw-vibe`: `1.3.2`
+- `possiblaw-build-plugin`: `1.2.3`
+- `possiblaw-guardrails`: `1.1.3`
+- `possiblaw-legal`: `1.4.3`
+- `possiblaw-vibe`: `1.3.3`
 
 ## Commits Pushed (latest first)
 - `5bc4e0d` fix(legal-skills): ask source first and refine stop-hook waiting behavior
