@@ -1,54 +1,51 @@
 # HANDOFF
 
-Date: 2026-02-22
+Date: 2026-02-23
 Repo: `/Users/salvadorcarranza/Plugins`
 Branch: `main`
 Remote: `origin` (`https://github.com/PossibLaw/PossibLaw-Plugins.git`)
-Status: Clean working tree at handoff.
+Status: Ready to push to `origin/main`.
 
-## What Was Updated
+## What Was Updated (2026-02-23)
 
-### 1) Legal-skills retrieval architecture implemented
-- Added unified retrieval core under `legal-skills/retrieval/` with:
-  - source adapters (`skills`, `contractcodex`, `sec`)
-  - normalization/chunking/vector ranking/output pipeline
-  - retries/timeouts/circuit-breaker/rate-limiter primitives
-  - runtime CLI entrypoint `legal-skills/retrieval/run-search.mjs`
-  - tests under `legal-skills/retrieval/tests/`
-- Added fallback catalogs:
-  - `legal-skills/skills/legal-assistant/references/contractcodex-index.md`
-  - `legal-skills/skills/legal-assistant/references/sec-exhibits-index.md`
-
-### 2) Command namespace migration to `possiblaw-*`
-- Command surfaces now standardized:
-  - `legal-skills/commands/possiblaw-legal.md`
-  - `project-vibe/commands/possiblaw-vibe.md`
-  - `build-plugin/commands/possiblaw-build-plugin.md`
-- Removed legacy command files from source:
-  - `legal-skills/commands/legal.md`
-  - `project-vibe/commands/vibe.md`
-
-### 3) Source-first behavior for legal command
-- Updated `/possiblaw-legal` flow to ask sub-skill/source first, then ask a source-specific query prompt.
-- Updated legal docs/contracts accordingly:
-  - `legal-skills/README.md`
-  - `legal-skills/QUICK_REFERENCE.md`
-  - `legal-skills/docs/agent-contract.md`
-  - `legal-skills/docs/codex-usage.md`
-
-### 4) Guardrails stop-hook prompt adjustment
-- Updated `guardrails/hooks/hooks.json` Stop prompt to explicitly approve legitimate “waiting for user input/selection/clarification” states.
-
-### 5) Marketplace/readme updates
-- Root README and plugin READMEs updated for new command names and legal-skills behavior.
-- Marketplace manifest file was touched earlier for metadata normalization:
+### 1) Canonical plugin slugs and paths
+- Renamed plugin package folders to match marketplace/plugin IDs:
+  - `possiblaw-build-plugin/`
+  - `possiblaw-guardrails/`
+  - `possiblaw-legal/`
+  - `possiblaw-vibe/`
+- Updated marketplace sources accordingly:
   - `.claude-plugin/marketplace.json`
 
+### 2) Slash command surfaces added
+- Added explicit `commands/` files so Claude Code has canonical `/possiblaw-*` command entries:
+  - `possiblaw-build-plugin/commands/possiblaw-build-plugin.md`
+  - `possiblaw-guardrails/commands/possiblaw-guardrails.md`
+  - `possiblaw-legal/commands/possiblaw-legal.md`
+  - `possiblaw-vibe/commands/possiblaw-vibe.md`
+
+### 3) Skills canonicalization (prevents wrong labels like legal-assistant/build-plugin)
+- Renamed packaged skill directories to match plugin IDs:
+  - `possiblaw-build-plugin/skills/possiblaw-build-plugin/`
+  - `possiblaw-legal/skills/possiblaw-legal/`
+- Updated skill `name:` values in SKILL.md frontmatter to match the canonical IDs:
+  - `possiblaw-build-plugin`
+  - `possiblaw-legal`
+- Removed the project-local `.claude/skills/*` copies so everything is marketplace-driven.
+
+### 4) Docs and runtime path fixes
+- Updated README/docs to reference new plugin paths and `retrieval/` runtime invocation.
+- Updated possiblaw-legal retrieval adapters to use plugin-root-relative fallback catalogs:
+  - `skills/possiblaw-legal/references/*`
+
+### 5) Marketplace-only usage
+- Removed local `.claude/skills` to ensure the UI doesn’t show duplicate/non-canonical options when plugins are installed via marketplace.
+
 ## Versions at Handoff
-- `legal-skills`: `1.3.1`
-- `project-vibe`: `1.2.0`
-- `build-plugin`: `1.1.0`
-- `guardrails`: `1.0.1`
+- `possiblaw-build-plugin`: `1.2.0`
+- `possiblaw-guardrails`: `1.1.0`
+- `possiblaw-legal`: `1.4.0`
+- `possiblaw-vibe`: `1.3.0`
 
 ## Commits Pushed (latest first)
 - `5bc4e0d` fix(legal-skills): ask source first and refine stop-hook waiting behavior
@@ -61,24 +58,27 @@ All above were pushed to `origin/main`.
 
 ## Validation Performed
 - Retrieval test suite:
-  - `node --test legal-skills/retrieval/tests/*.test.mjs`
+  - `node --test possiblaw-legal/retrieval/tests/*.test.mjs`
+  - Result: all tests passed.
+- Guardrails tests:
+  - `python3 -m pytest -q possiblaw-guardrails/tests`
   - Result: all tests passed.
 - JSON validation (plugin/hook manifests) performed with `jq`.
-- Local command file checks confirm only `possiblaw-*` command files are present in source.
+- Local command file checks confirm `commands/possiblaw-*.md` exists for each plugin.
 
 ## Local Environment Actions (non-repo)
 These were done on the operator machine to resolve stale command listings in Claude UI:
 - Marketplace refreshed: `claude plugin marketplace update PossibLaw`
 - Plugin updates executed:
-  - `claude plugin update build-plugin@PossibLaw`
-  - `claude plugin update project-vibe@PossibLaw`
-  - `claude plugin update legal-skills@PossibLaw`
-  - `claude plugin update guardrails@PossibLaw`
+  - `claude plugin update possiblaw-build-plugin@PossibLaw`
+  - `claude plugin update possiblaw-vibe@PossibLaw`
+  - `claude plugin update possiblaw-legal@PossibLaw`
+  - `claude plugin update possiblaw-guardrails@PossibLaw`
 - Old cached plugin version folders containing legacy commands were removed from `~/.claude/plugins/cache/PossibLaw/...`.
 
 ## Known Notes
 - Some user-facing changes require Claude Code restart after plugin update to fully refresh command picker.
-- `legal-skills` still uses `api.case.dev` for structured skills lookup and `agentskills.legal` as site/fallback content source (intentional).
+- `possiblaw-legal` still uses `api.case.dev` for structured skills lookup and `agentskills.legal` as site/fallback content source (intentional).
 - Unrelated local plugin note observed: `superpowers@claude-plugins-official` had a local permission/cache error in this environment.
 
 ## Recommended Next-Agent Checks
@@ -90,5 +90,5 @@ These were done on the operator machine to resolve stale command listings in Cla
    - source picker is asked first
    - source-specific query prompt appears second
 3. Smoke test retrieval runtime:
-   - `node legal-skills/retrieval/run-search.mjs --query "indemnification" --source all --json --pretty`
+   - `node possiblaw-legal/retrieval/run-search.mjs --query "indemnification" --source all --json --pretty`
 4. If stale commands reappear in user UI, re-run marketplace update and plugin updates, then restart Claude Code.

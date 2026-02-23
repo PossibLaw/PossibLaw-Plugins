@@ -19,7 +19,7 @@ We're ReCoding the Vibe in legal.
 
 ## Available Plugins
 
-### build-plugin
+### possiblaw-build-plugin
 
 Interactive plugin builder for Claude Code. Use `/possiblaw-build-plugin` to launch guided plugin creation. It asks targeted questions to determine the right extensibility mechanism — CLAUDE.md files, skills, commands, hooks, or agents — then generates properly structured files following documented patterns.
 
@@ -27,7 +27,7 @@ Interactive plugin builder for Claude Code. Use `/possiblaw-build-plugin` to lau
 claude plugin install possiblaw-build-plugin --marketplace PossibLaw
 ```
 
-### guardrails
+### possiblaw-guardrails
 
 General-purpose safety hooks for Claude Code. Blocks destructive commands (`rm -rf`, `sudo rm`, `curl | bash`, force-push to main), protects sensitive files (`.env`, SSH keys, credentials), auto-formats code after writes, and validates task completion before sessions end. Ships with a curated blacklist and escalation prompts for risky-but-not-fatal commands.
 
@@ -35,15 +35,15 @@ General-purpose safety hooks for Claude Code. Blocks destructive commands (`rm -
 claude plugin install possiblaw-guardrails --marketplace PossibLaw
 ```
 
-### legal-skills
+### possiblaw-legal
 
-Single-command legal retrieval plugin for novice builders. `/possiblaw-legal` now asks users whether to search `Skills`, `ContractCodex`, `SEC EDGAR`, or `All`, then returns either top skill matches or a prompt-ready evidence pack with citations. It includes a runtime entrypoint for tool wrappers: `legal-skills/retrieval/run-search.mjs`.
+Single-command legal retrieval plugin for novice builders. `/possiblaw-legal` now asks users whether to search `Skills`, `ContractCodex`, `SEC EDGAR`, or `All`, then returns either top skill matches or a prompt-ready evidence pack with citations. It includes a runtime entrypoint for tool wrappers: `possiblaw-legal/retrieval/run-search.mjs`.
 
 ```bash
 claude plugin install possiblaw-legal --marketplace PossibLaw
 ```
 
-### project-vibe
+### possiblaw-vibe
 
 Discovery-first project planning for non-coders. Use `/possiblaw-vibe` to guide goal definition, budget constraints, and tech stack selection, then generate a complete dev environment with docs, helper scripts, and a debugging agent.
 
@@ -93,7 +93,7 @@ Use this pattern instead:
    `codex mcp add agentskills --url https://skills.case.dev/api/mcp`
 3. In Codex prompts, explicitly request that workflow (example: "Use the legal workflow from this repo and show top 5 skills for contract review").
 
-For legal-skills specifically, see:
-- `legal-skills/docs/codex-usage.md`
-- `legal-skills/docs/agent-contract.md`
-- `legal-skills/retrieval/README.md`
+For possiblaw-legal specifically, see:
+- `possiblaw-legal/docs/codex-usage.md`
+- `possiblaw-legal/docs/agent-contract.md`
+- `possiblaw-legal/retrieval/README.md`
