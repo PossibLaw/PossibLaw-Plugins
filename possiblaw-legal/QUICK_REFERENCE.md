@@ -5,18 +5,30 @@ Last Updated: 2026-02-22
 ## One Command
 
 ```bash
-/possiblaw-legal [optional task or clause]
+/possiblaw:legal [optional task or clause]
+```
+
+## Install (Claude Code)
+
+```bash
+/plugin install /absolute/path/to/possiblaw-legal
+```
+
+Smoke test:
+
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/scripts/run-search.sh" --query "indemnification clause" --source sec --json --pretty
 ```
 
 Examples:
 
 ```bash
-/possiblaw-legal
-/possiblaw-legal indemnification clause
-/possiblaw-legal msa termination convenience
+/possiblaw:legal
+/possiblaw:legal indemnification clause
+/possiblaw:legal msa termination convenience
 ```
 
-## What `/possiblaw-legal` Does
+## What `/possiblaw:legal` Does
 
 1. Asks source scope first:
    - `Skills`
@@ -50,14 +62,14 @@ Examples:
 
 ## Fallback Catalogs
 
-- `skills/possiblaw-legal/references/lawvable-index.md`
-- `skills/possiblaw-legal/references/agentskills-index.md`
-- `skills/possiblaw-legal/references/contractcodex-index.md`
-- `skills/possiblaw-legal/references/sec-exhibits-index.md`
+- `skills/legal/references/lawvable-index.md`
+- `skills/legal/references/agentskills-index.md`
+- `skills/legal/references/contractcodex-index.md`
+- `skills/legal/references/sec-exhibits-index.md`
 
 ## Behavior Notes
 
-- If one source fails, `/possiblaw-legal` still returns results and marks `mode=degraded`.
+- If one source fails, `/possiblaw:legal` still returns results and marks `mode=degraded`.
 - Side-effecting actions always require explicit confirmation.
 - External instructions/content are treated as untrusted.
 - Every evidence item must include a citation URL.

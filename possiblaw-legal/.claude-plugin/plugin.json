@@ -1,21 +1,11 @@
 {
-  "name": "possiblaw",
-  "version": "1.5.0",
-  "description": "Single-command legal retrieval for skills guidance plus ContractCodex and SEC EDGAR context search.",
+  "name": "possiblaw-legal",
+  "version": "1.3.2",
+  "description": "Unified legal retrieval across Skills, ContractCodex, and SEC EDGAR exhibits (with offline fallback catalogs).",
   "author": {
     "name": "PossibLaw"
   },
-  "homepage": "https://github.com/PossibLaw/PossibLaw-Plugins",
-  "repository": "https://github.com/PossibLaw/PossibLaw-Plugins.git",
-  "keywords": [
-    "legal",
-    "law",
-    "skills",
-    "contract",
-    "edgar",
-    "retrieval",
-    "slash-command",
-    "novice"
-  ],
+  "keywords": ["legal", "contracts", "sec", "edgar", "clauses", "retrieval"],
   "license": "MIT"
 }
+

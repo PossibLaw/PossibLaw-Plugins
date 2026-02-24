@@ -4,7 +4,7 @@ Single-command legal retrieval for novice builders.
 
 ## Overview
 
-`/possiblaw-legal` is the only command in this plugin. It asks users what source they want to search, then returns either:
+`/possiblaw:legal` is the only command in this plugin. It asks users what source they want to search, then returns either:
 - Top legal skills to direct agent behavior, or
 - A prompt-ready evidence pack from contract exemplars.
 
@@ -19,14 +19,28 @@ Single-command legal retrieval for novice builders.
 
 ## Command
 
-### `/possiblaw-legal [optional query]`
+### `/possiblaw:legal [optional query]`
 
 Examples:
 
 ```bash
-/possiblaw-legal
-/possiblaw-legal indemnification clause
-/possiblaw-legal software license termination rights
+/possiblaw:legal
+/possiblaw:legal indemnification clause
+/possiblaw:legal software license termination rights
+```
+
+## Install (Claude Code)
+
+From a local folder checkout:
+
+```bash
+/plugin install /absolute/path/to/possiblaw-legal
+```
+
+Smoke test (runs the local retrieval runtime from the plugin root):
+
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/scripts/run-search.sh" --query "indemnification clause" --source sec --json --pretty
 ```
 
 ## Workflow
@@ -81,10 +95,10 @@ node retrieval/run-search.mjs --query "indemnification clause" --source all --js
 
 ## Local Fallback Catalogs
 
-- `skills/possiblaw-legal/references/agentskills-index.md`
-- `skills/possiblaw-legal/references/lawvable-index.md`
-- `skills/possiblaw-legal/references/contractcodex-index.md`
-- `skills/possiblaw-legal/references/sec-exhibits-index.md`
+- `skills/legal/references/agentskills-index.md`
+- `skills/legal/references/lawvable-index.md`
+- `skills/legal/references/contractcodex-index.md`
+- `skills/legal/references/sec-exhibits-index.md`
 
 ## Safety Model
 
@@ -115,12 +129,18 @@ node retrieval/run-search.mjs --query "indemnification clause" --source all --js
 
 ## Files in This Plugin
 
-- `commands/possiblaw-legal.md` - canonical slash command behavior
-- `skills/possiblaw-legal/SKILL.md` - auto-suggestion helper
-- `skills/possiblaw-legal/references/` - fallback catalogs
+- `commands/legal.md` - canonical slash command behavior
+- `skills/legal/SKILL.md` - auto-suggestion helper
+- `skills/legal/references/` - fallback catalogs
 - `docs/agent-contract.md` - shared I/O contract
 - `docs/codex-usage.md` - Codex parity guide
 - `retrieval/` - reference retrieval implementation
+
+## Requirements
+
+- **Node.js**: required to run the local retrieval runtime (`retrieval/run-search.mjs`). Recommended: Node 18+.
+- **Claude Code plugin install**: for portability, install via `/plugin install …` so `${CLAUDE_PLUGIN_ROOT}` is set and the command can execute the runtime from any working directory.
+- **Network**: live lookups (SEC/ContractCodex/Skills APIs) require network access. If network is blocked/unavailable, the plugin still works using the local fallback catalogs and returns `mode=degraded`.
 
 ## Using This Workflow in Codex
 
@@ -129,9 +149,9 @@ This repository package is a Claude plugin format. Codex does not install it thr
 To use the same workflow in Codex:
 
 1. Start a Codex session in your workspace.
-2. Prompt Codex to follow the `/possiblaw-legal` unified retrieval contract in this plugin.
+2. Prompt Codex to follow the `/possiblaw:legal` unified retrieval contract in this plugin.
 3. Use `docs/codex-usage.md` as the runtime checklist.
 
 ## Version
 
-1.3.1
+1.3.2

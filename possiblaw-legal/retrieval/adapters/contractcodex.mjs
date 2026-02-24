@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { normalizeContractCodexEntry } from "../normalize.mjs";
 import { fetchWithRetry } from "../resilience.mjs";
+import { resolvePluginPath } from "../paths.mjs";
 
 function stripHtml(html) {
   return String(html || "")
@@ -88,7 +89,7 @@ export function createContractCodexAdapter(options = {}) {
   const fetcher = options.fetcher ?? globalThis.fetch;
   const enabled = options.enabled ?? true;
   const fallbackPath =
-    options.fallbackPath ?? "skills/possiblaw-legal/references/contractcodex-index.md";
+    options.fallbackPath ?? resolvePluginPath("skills", "legal", "references", "contractcodex-index.md");
 
   async function loadFallback(query) {
     try {

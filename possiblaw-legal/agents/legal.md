@@ -12,9 +12,9 @@ Single entrypoint for novice-friendly legal context retrieval and skill applicat
 ## Usage
 
 ```bash
-/possiblaw-legal
-/possiblaw-legal indemnification clause
-/possiblaw-legal vendor agreement termination rights
+/possiblaw:legal
+/possiblaw:legal indemnification clause
+/possiblaw:legal vendor agreement termination rights
 ```
 
 ## Goal
@@ -49,21 +49,21 @@ Map to:
 - `https://agentskills.legal/skills/{slug}.md` (fallback)
 - `https://www.lawvable.com/en` (domain-scoped live lookup)
 - Local fallback catalogs:
-  - `skills/possiblaw-legal/references/agentskills-index.md`
-  - `skills/possiblaw-legal/references/lawvable-index.md`
+  - `skills/legal/references/agentskills-index.md`
+  - `skills/legal/references/lawvable-index.md`
 
 ### ContractCodex
 - `https://www.contractcodex.com`
 - `https://www.contractcodex.com/site-map`
 - Local fallback catalog:
-  - `skills/possiblaw-legal/references/contractcodex-index.md`
+  - `skills/legal/references/contractcodex-index.md`
 
 ### SEC EDGAR
 - Ticker/CIK map: `https://www.sec.gov/files/company_tickers.json`
 - Submissions: `https://data.sec.gov/submissions/CIK##########.json`
 - Filing index/documents: `https://data.sec.gov/Archives/edgar/data/...`
 - Local fallback catalog:
-  - `skills/possiblaw-legal/references/sec-exhibits-index.md`
+  - `skills/legal/references/sec-exhibits-index.md`
 
 ## Models
 
@@ -166,6 +166,16 @@ Run unified context retrieval flow:
    - `Copy/paste context block`
 8. Ask refinement question:
    - "Do you want to narrow by clause type, company/ticker, or source?"
+
+## SEC Workflow
+
+When routing SEC queries, follow this three-step pattern:
+
+1. **Search** (EFTS full-text): Run the search command with `--source sec`. Present numbered results with company, form type, date, and exhibit type. Ask user which document to examine.
+2. **Extract provision**: For a user-selected document, run fetch-extract mode with `--mode fetch-extract --url "<url>" --extract "<keyword>"`. Present the extracted section text.
+3. **Fetch full document**: Only if user explicitly asks for full text, run `--mode fetch --url "<url>"`.
+
+Always end SEC results with: "This is a factual excerpt from a publicly filed SEC exhibit. This is not legal advice."
 
 ## SEC Compliance Rules (required)
 

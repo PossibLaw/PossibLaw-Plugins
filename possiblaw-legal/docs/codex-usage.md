@@ -1,6 +1,6 @@
-# Codex Usage Guide for `/possiblaw-legal` Unified Retrieval
+# Codex Usage Guide for `/possiblaw:legal` Unified Retrieval
 
-This document mirrors the same `/possiblaw-legal` workflow contract used by Claude command execution.
+This document mirrors the same `/possiblaw:legal` workflow contract used by Claude command execution.
 
 ## Objective
 
@@ -93,4 +93,18 @@ Or pass a JSON payload over stdin:
 
 ```bash
 echo '{"query":"msa termination clause","sourceScope":"sec"}' | node retrieval/run-search.mjs --json
+```
+
+## Portability Note (Claude Code plugins)
+
+When used as a Claude Code plugin, prefer plugin-rooted execution so the command works regardless of the current working directory:
+
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/scripts/run-search.sh" --query "indemnification clause" --source all --json --pretty
+```
+
+## Smoke Test
+
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/scripts/run-search.sh" --query "indemnification clause" --source sec --json --pretty
 ```

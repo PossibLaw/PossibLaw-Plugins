@@ -1,0 +1,6 @@
+{
+  "name": "possiblaw-legal",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" }
+}

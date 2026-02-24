@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { normalizeSkillsCandidate } from "../normalize.mjs";
 import { fetchWithRetry } from "../resilience.mjs";
+import { resolvePluginPath } from "../paths.mjs";
 
 function overlapScore(query, text) {
   const q = new Set(String(query).toLowerCase().split(/\W+/).filter(Boolean));
@@ -48,8 +49,8 @@ function parseHeadingFallback(markdown, sourceName) {
 export function createSkillsAdapter(options = {}) {
   const fetcher = options.fetcher ?? globalThis.fetch;
   const catalogPaths = options.catalogPaths ?? [
-    "skills/possiblaw-legal/references/agentskills-index.md",
-    "skills/possiblaw-legal/references/lawvable-index.md",
+    resolvePluginPath("skills", "legal", "references", "agentskills-index.md"),
+    resolvePluginPath("skills", "legal", "references", "lawvable-index.md"),
   ];
 
   async function loadFallbackRecords(query) {

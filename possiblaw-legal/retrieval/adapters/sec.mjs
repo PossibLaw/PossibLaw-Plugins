@@ -1,20 +1,13 @@
 import { readFile } from "node:fs/promises";
 import { normalizeSecEntry } from "../normalize.mjs";
 import { fetchWithRetry, RpsLimiter } from "../resilience.mjs";
+import { resolvePluginPath } from "../paths.mjs";
+import { stripHtml } from "../html.mjs";
 
 const SEC_TICKER_URL = "https://www.sec.gov/files/company_tickers.json";
 const SEC_SUBMISSIONS_URL = "https://data.sec.gov/submissions";
 const SEC_ARCHIVES_URL = "https://data.sec.gov/Archives/edgar/data";
-
-function stripHtml(html) {
-  return String(html || "")
-    .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
+const SEC_EFTS_URL = "https://efts.sec.gov/LATEST/search-index";
 
 function overlapScore(query, text) {
   const q = new Set(String(query).toLowerCase().split(/\W+/).filter(Boolean));
@@ -90,10 +83,11 @@ function parseFallbackCatalog(markdown) {
 
 export function createSecAdapter(options = {}) {
   const fetcher = options.fetcher ?? globalThis.fetch;
-  const userAgent = options.userAgent || "PossibLawLegalSkills/1.3.1 (contact: support@possiblaw.com)";
+  const userAgent = options.userAgent || "PossibLawLegalSkills/1.3.2 (contact: support@possiblaw.com)";
   const rps = options.rps ?? 5;
   const limiter = new RpsLimiter(rps);
-  const fallbackPath = options.fallbackPath ?? "skills/possiblaw-legal/references/sec-exhibits-index.md";
+  const fallbackPath =
+    options.fallbackPath ?? resolvePluginPath("skills", "legal", "references", "sec-exhibits-index.md");
 
   async function secFetch(url, controls = {}) {
     await limiter.waitTurn();
@@ -150,6 +144,75 @@ export function createSecAdapter(options = {}) {
     const response = await secFetch(url, controls);
     const body = await response.text();
     return { url, text: stripHtml(body) };
+  }
+
+  function buildEftsDocUrl(hit) {
+    const s = hit._source;
+    const cik = String(s.ciks?.[0] || "").replace(/^0+/, "");
+    const accessionNoDashes = String(s.adsh || "").replace(/-/g, "");
+    const filename = String(hit._id || "").split(":")[1] || "";
+    if (!cik || !accessionNoDashes || !filename) {
+      return null;
+    }
+    return `https://www.sec.gov/Archives/edgar/data/${cik}/${accessionNoDashes}/${filename}`;
+  }
+
+  function parseEftsDisplayName(displayName) {
+    const match = String(displayName || "").match(/^(.+?)\s*\(([^)]+)\)/);
+    if (match) {
+      return { company: match[1].trim(), ticker: match[2].split(",")[0].trim() };
+    }
+    return { company: String(displayName || "Public company").trim(), ticker: "" };
+  }
+
+  async function loadEftsSearch(query, controls = {}) {
+    if (!fetcher) {
+      return [];
+    }
+
+    const params = new URLSearchParams({ q: query });
+    if (controls.startdt) {
+      params.set("dateRange", "custom");
+      params.set("startdt", controls.startdt);
+      params.set("enddt", controls.enddt || new Date().toISOString().slice(0, 10));
+    }
+
+    const url = `${SEC_EFTS_URL}?${params}`;
+    const response = await secFetch(url, controls);
+    const payload = await response.json();
+    const hits = payload?.hits?.hits || [];
+    const maxResults = controls.maxEftsResults ?? 10;
+
+    const records = [];
+    for (const hit of hits.slice(0, maxResults)) {
+      const s = hit._source;
+      if (!s) continue;
+
+      const docUrl = buildEftsDocUrl(hit);
+      if (!docUrl) continue;
+
+      const fileType = String(s.file_type || "");
+      if (!/^EX-10/i.test(fileType)) continue;
+
+      const { company, ticker } = parseEftsDisplayName(s.display_names?.[0]);
+      const fileDesc = String(s.file_description || fileType);
+
+      records.push(
+        normalizeSecEntry({
+          company,
+          title: `${ticker || company} ${fileDesc}`.trim(),
+          summary: `${company} — ${s.form || ""} filing (${s.file_date || "unknown date"}). Exhibit: ${fileType}.`,
+          snippet: `${company} — ${s.form || ""} filing (${s.file_date || "unknown date"}). Exhibit: ${fileType}. Use fetch-extract to retrieve provision text.`,
+          url: docUrl,
+          formType: s.form || "",
+          exhibitType: fileType,
+          filingDate: s.file_date || "",
+          tags: [ticker, s.form, "efts"].filter(Boolean),
+        })
+      );
+    }
+
+    return records;
   }
 
   async function loadLive(query, controls = {}) {
@@ -215,15 +278,26 @@ export function createSecAdapter(options = {}) {
 
   return {
     source: "sec",
+    secFetch,
     async search(query, controls = {}) {
       const notes = [];
       const fallback = await loadFallback(query);
       let live = [];
 
+      // Try EFTS full-text search first (topic-based)
       try {
-        live = await loadLive(query, controls);
+        live = await loadEftsSearch(query, controls);
       } catch (error) {
-        notes.push(`SEC EDGAR live lookup unavailable: ${error.message}`);
+        notes.push(`SEC EFTS search unavailable: ${error.message}`);
+      }
+
+      // Fall back to ticker-based search if EFTS returned no EX-10 results
+      if (!live.length) {
+        try {
+          live = await loadLive(query, controls);
+        } catch (error) {
+          notes.push(`SEC EDGAR ticker lookup unavailable: ${error.message}`);
+        }
       }
 
       return {

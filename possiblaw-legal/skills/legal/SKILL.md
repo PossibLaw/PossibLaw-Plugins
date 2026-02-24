@@ -8,7 +8,7 @@ allowed-tools: Read
 
 # possiblaw-legal Skill
 
-Auto-suggests `/possiblaw legal` as the unified legal retrieval command.
+Auto-suggests `/possiblaw:legal` as the unified legal retrieval command.
 
 ## Description (5%)
 
@@ -25,23 +25,28 @@ Use this skill when the user:
 
 ### Discovery
 - Detects legal-task intent from conversation context
-- Suggests `/possiblaw legal <task-or-clause>` as the default entrypoint
-- Uses source-picker model:
-  - `Skills` for how the agent should act
-  - `ContractCodex` for exemplar contracts/clauses
-  - `SEC` for public-company exemplar exhibits
-  - `All` for blended retrieval
+- Suggests `/possiblaw:legal <task-or-clause>` as the default entrypoint
+  - Uses source-picker model:
+    - `Skills` for how the agent should act
+    - `ContractCodex` for exemplar contracts/clauses
+    - `SEC` for public-company exemplar exhibits
+    - `All` for blended retrieval
 
 ### Guidance
 - Explains source scope in plain language before retrieval
 - Encourages prompt-ready evidence packs with citations
 - Keeps user in explicit confirmation flow before any side effects
 
+### SEC Document Fetch & Extract
+- SEC source supports topic-based full-text search via EFTS
+- After search, users can fetch full documents or extract specific provisions by keyword
+- Supports `fetch` (full document text) and `fetch-extract` (keyword-targeted section extraction) modes
+
 ## Usage Pattern
 
 1. Detect legal task intent.
-2. Suggest `/possiblaw legal` with a concrete query.
-3. Let `/possiblaw legal` ask source picker.
+2. Suggest `/possiblaw:legal` with a concrete query.
+3. Let `/possiblaw:legal` ask source picker.
 4. If `skills`, present top 5 and ask for selection.
 5. If `contractcodex`, `sec`, or `all`, return prompt-ready evidence pack.
 6. Ask user whether to refine clause type, source, or company/ticker filters.
