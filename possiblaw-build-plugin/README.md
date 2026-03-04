@@ -1,6 +1,6 @@
 # possiblaw-build-plugin
 
-Interactive plugin builder for Claude Code. Guides you through creating plugins by asking targeted questions and generating properly structured files.
+Interactive plugin builder for Claude Code. Routes plugin-scaffolding requests into a deterministic command workflow that asks targeted questions and generates structured files.
 
 ## Installation
 
@@ -8,20 +8,26 @@ Interactive plugin builder for Claude Code. Guides you through creating plugins 
 # From local path
 /plugin install /path/to/possiblaw-build-plugin
 
-# Or copy to global skills
-cp -r skills/possiblaw-build-plugin ~/.claude/skills/
+# Optional: copy router skill globally
+cp -r skills/build-plugin ~/.claude/skills/
 ```
 
-## Usage
+## Quick Start (Non-Technical)
+
+1. Install the plugin.
+2. Run `/possiblaw-build-plugin:build-plugin`.
+3. Describe what you want in plain English (example: "Create a command for contract triage").
+4. Answer the guided questions.
+5. Approve the draft when it looks right.
 
 Use the slash command directly:
 
 ```bash
-/possiblaw-build-plugin
-/possiblaw-build-plugin create a command for contract triage
+/possiblaw-build-plugin:build-plugin
+/possiblaw-build-plugin:build-plugin create a command for contract triage
 ```
 
-Or let the skill auto-activate when you mention creating plugins, skills, commands, hooks, or agents:
+Or let the `build-plugin` skill auto-activate and route you to the command when you mention creating plugins, skills, commands, hooks, or agents:
 
 ```
 Create a new slash command for deploying to staging
@@ -37,12 +43,12 @@ I need to set up hooks to block dangerous commands
 
 ## What It Does
 
-1. **Checks foundation** - Recommends CLAUDE.md first if missing
-2. **Classifies intent** - Determines which mechanism you need
-3. **Asks targeted questions** - Gathers specifics for your use case
-4. **Generates files** - Creates properly structured files from templates
-5. **Reviews with you** - Shows files before writing
-6. **Writes files** - Creates everything in the right locations
+1. **Routes safely** - Auto-activated skill is read-only and routes to command workflow
+2. **Checks foundation** - Recommends `CLAUDE.md` first if missing
+3. **Classifies intent** - Determines whether you need command, skill, hook, agent, or full plugin
+4. **Asks targeted questions** - Gathers only the data needed for selected artifact
+5. **Shows file plan + drafts** - Displays exact files and content before writing
+6. **Writes on approval** - Creates files only after explicit confirmation
 
 ## The Hierarchy
 
@@ -69,21 +75,22 @@ References / Agents    ← Deep context (specialist knowledge)
 
 ## Reference Files
 
-The skill includes templates and examples for all component types:
+The command workflow reads templates and examples from:
 
-- `references/templates.md` - All file templates
-- `references/decision-tree.md` - Full questionnaire flow
-- `references/examples.md` - Real-world production examples
+- `skills/build-plugin/references/templates.md` - File templates
+- `skills/build-plugin/references/decision-tree.md` - Questionnaire flow
+- `skills/build-plugin/references/examples.md` - Production patterns
+- `skills/build-plugin/references/eval-queries.md` - Regression test prompts
 
 ## Development & Deployment
 
 ```bash
 # Phase 1: Test locally (project-level)
-# Skill is at .claude/skills/possiblaw-build-plugin/ - auto-discovered in this project
-# Command is at commands/possiblaw-build-plugin.md
+# Skill is at skills/build-plugin/SKILL.md
+# Command is at commands/build-plugin.md
 
 # Phase 2: Deploy globally (all your projects)
-cp -r .claude/skills/possiblaw-build-plugin ~/.claude/skills/
+cp -r skills/build-plugin ~/.claude/skills/
 
 # Phase 3: Share as distributable plugin
 # Give others the possiblaw-build-plugin/ directory
