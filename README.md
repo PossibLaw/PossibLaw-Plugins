@@ -18,7 +18,7 @@ PossibLaw plugin marketplace for Claude Code. Distributes our dual-host starter 
 PossibLaw helps legal professionals become Builders. Architect Legal Professionals who don't just do the work, but design what comes next. AI is rewriting the rules. We help you stay ahead.
 
 - Subscribe to our [Substack](https://www.possiblaw.com) for field notes on AI, teams, and transformation.
-- Learn to think like a developer with [LexPair](https://www.lexpair.ai).
+- Learn to think like a developer with [Trazomo](https://www.trazomo.com).
 - Bring in [Lumen Atlas](https://www.possiblaw.com/p/consulting) for hands-on AI training and workflow coaching.
 
 We're ReCoding the Vibe in legal.
