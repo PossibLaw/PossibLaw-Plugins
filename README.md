@@ -25,13 +25,19 @@ We're ReCoding the Vibe in legal.
 
 ## Plugins
 
-### possiblaw-starter (v2.0.0)
+### possiblaw-starter (v2.1.0)
 
 Dual-host (Claude + Codex) governance pack with state-artifact pipeline (PLAN/TEST/REVIEW/HANDOFF), role registry, continuity checkpoints, and runtime guardrails (Claude only). Sourced from [`PossibLaw/agent-starter-pack`](https://github.com/PossibLaw/agent-starter-pack). Codex users continue using the bootstrap installer in that repo.
 
+Installing the plugin gives you the **global** layer (guardrails, agents, skills active in every Claude Code session). To scaffold the **per-project** layer (`AGENTS.md`, `CLAUDE.md`, `.agent/*.md` state templates, `docs/roles/`, `docs/workflows/`, `docs/glossary.md`), run the init command inside any project repo after install:
+
 ```bash
 /plugin install possiblaw-starter@possiblaw-plugins
+# then, inside a project repo:
+/possiblaw-starter:init
 ```
+
+`/possiblaw-starter:init` auto-detects your stack (Node/Python/Go/Rust), pre-fills test/lint/typecheck/build commands, patches `.gitignore` so per-session state files stay local, and supports `--preserve-progress` (skip overwriting in-progress `.agent/*.md`) and `--dry-run` (preview).
 
 ### possiblaw-vibe (v2.0.0)
 
@@ -47,6 +53,18 @@ Legal-app design grill in the spirit of Matt Pocock's grill-me skill. Walks docu
 /plugin marketplace add PossibLaw/PossibLaw-Plugins
 /plugin install possiblaw-starter@possiblaw-plugins
 /plugin install possiblaw-vibe@possiblaw-plugins
+```
+
+Then, in any project repo where you want the state-artifact pipeline + governance files:
+
+```bash
+/possiblaw-starter:init
+```
+
+To start a legal-app design session:
+
+```bash
+/possiblaw-vibe:vibe-coding
 ```
 
 If you previously added the marketplace under a different name, remove it and re-add so Claude picks up the renamed marketplace:
