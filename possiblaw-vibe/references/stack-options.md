@@ -248,3 +248,87 @@ START
 4. **Self-hosting everything** - Your time has value
 5. **Newest framework** - Stable > shiny for production
 6. **Enterprise DB for side project** - SQLite handles more than you think
+
+---
+
+## Legal-tech specific cost ranges
+
+Pin these alongside the general stack tiers when grilling a legal app. Pick on volume, branding, and integration needs -- not on lowest sticker price.
+
+### E-signature
+
+| Provider | Typical cost | Best for |
+|----------|--------------|----------|
+| **HelloSign (Dropbox Sign)** | ~$15/mo Essentials, ~$25/mo Standard | Solo + small firm baseline |
+| **DocuSign** | ~$10/mo Personal, ~$25/mo Standard, ~$40/mo Business | Default for most firms |
+| **Adobe Sign / Acrobat Sign** | ~$15-25/user/mo bundled with Acrobat | Adobe shops |
+| **PandaDoc** | $35-65/mo | Engagement letters with payment + branding |
+
+### Practice management
+
+| Tool | Cost | Notes |
+|------|------|-------|
+| **Clio Manage** | $79-129/user/mo | Industry default; deepest integration ecosystem |
+| **MyCase** | $59-99/user/mo | Strong for plaintiff PI |
+| **PracticePanther** | $59-99/user/mo | Solo / small firm budget pick |
+| **Smokeball** | $99-179/user/mo | Microsoft-shop firms; deep Word/Outlook integration |
+| **CosmoLex** | $99-119/user/mo | Built-in trust accounting; one-vendor stack |
+
+### E-filing
+
+- State court e-filing: many states free (Texas eFile, NY NYSCEF); some charge per-filing fees.
+- Federal PACER: ~$0.10/page retrieval; CM/ECF filing typically free.
+- Third-party EFM aggregators (One Legal, File & ServeXpress, FileTime): ~$5-15 per filing.
+
+### Document storage
+
+| Option | Cost | Notes |
+|--------|------|-------|
+| **S3** | ~$0.023/GB/mo + $0.09/GB egress | Cheapest; build folder semantics yourself |
+| **Cloudflare R2** | ~$0.015/GB/mo + $0 egress | Cheapest if you serve documents back to users a lot |
+| **Box for Business** | ~$15-35/user/mo | If firm already on Box |
+| **NetDocuments** | ~$50+/user/mo | Mid-market firms; legal-aware |
+| **iManage** | Enterprise pricing | Large firms; deep Word integration |
+
+### LLM APIs
+
+| Model | Approximate cost (input / output per 1M tokens) | Notes |
+|-------|-------------------------------------------------|-------|
+| **Claude Sonnet** | ~$3 / ~$15 per 1M tokens | Default for legal long-context work |
+| **Claude Opus** | ~$15 / ~$75 per 1M tokens | High-stakes drafting and review |
+| **Claude Haiku** | ~$0.80 / ~$4 per 1M tokens | High-volume classification / extraction |
+| **GPT-4o** | ~$2.50 / ~$10 per 1M tokens | Comparable to Sonnet on cost |
+
+Allocate LLM cost per matter. Use prompt caching for long-doc workflows (Anthropic prompt caching cuts repeated-context cost ~10x). Confirm BAA / DPA and no-training clauses before sending privileged content.
+
+### Court calendar / deadlines
+
+- **LawToolBox**: ~$30-80/user/mo depending on jurisdictions covered.
+- **CourtRules**: ~$50-200/mo for typical small firm.
+- **Smokeball deadline assistant**: bundled with Smokeball.
+- **DIY rules tables**: free, but engineering and legal-research effort to maintain across jurisdictions.
+
+### Trust accounting / IOLTA
+
+- **LawPay**: ~$20/mo + transaction fees (~2.95% cards / ~$1.95 ACH); IOLTA-aware.
+- **LeanLaw**: $40-60/user/mo; pairs well with QuickBooks Online for trust-aware GL.
+- **TrustBooks**: ~$49+/mo; standalone trust accounting.
+- **CosmoLex / Clio Manage**: native trust accounting bundled.
+
+### CRM / intake
+
+- **Clio Grow**: ~$49-89/user/mo; pairs with Clio Manage.
+- **Lawmatics**: ~$129+/mo; marketing automation focus.
+- **HubSpot**: free starter; $20+/mo for teams.
+
+### Email and add-ins
+
+- **Outlook / M365 Business**: ~$6-22/user/mo.
+- **Google Workspace**: ~$6-18/user/mo.
+- **Save-to-matter add-ins**: build in-house or buy via PMS (Clio, Smokeball, MyCase all ship Outlook add-ins).
+
+### Recommended defaults by audience (cost stack)
+
+- **Solo attorney (~$200-350/mo all-in)**: HelloSign + Clio Manage solo + LawPay + Google Workspace + S3 + Anthropic Claude with redaction + LawToolBox.
+- **Small firm 5 users (~$1,200-2,000/mo all-in)**: DocuSign Business + Clio Manage + LawPay + LeanLaw + Google or M365 + S3 or NetDocuments + Anthropic Claude (BAA) + LawToolBox + One Legal.
+- **In-house legal team**: leverage existing corporate licenses (M365, Adobe, Okta, Bedrock); spend goes to build vs buy of the legal-specific layer.

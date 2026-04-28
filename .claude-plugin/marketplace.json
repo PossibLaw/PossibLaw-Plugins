@@ -1,35 +1,26 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "possiblaw-plugins",
-  "description": "PossibLaw plugin marketplace: build-plugin, guardrails, legal retrieval, and vibe-driven project planning.",
+  "description": "PossibLaw plugin marketplace: dual-host governance starter pack and legal-app design grill.",
   "owner": {
     "name": "Salvador Carranza",
     "email": "salvador@possiblaw.com"
   },
   "plugins": [
     {
-      "name": "possiblaw-build-plugin",
-      "source": "./possiblaw-build-plugin",
-      "version": "1.3.1",
-      "description": "Interactive plugin builder guided by the Claude Code Plugin Development Guide."
-    },
-    {
-      "name": "possiblaw-guardrails",
-      "source": "./possiblaw-guardrails",
-      "version": "1.2.2",
-      "description": "Safety hooks for Claude Code."
-    },
-    {
-      "name": "possiblaw-legal",
-      "source": "./possiblaw-legal",
-      "version": "1.5.1",
-      "description": "Unified legal retrieval across Skills, ContractCodex, and SEC EDGAR exhibits."
+      "name": "possiblaw-starter",
+      "source": {
+        "source": "github",
+        "repo": "PossibLaw/agent-starter-pack"
+      },
+      "version": "2.0.0",
+      "description": "Dual-host (Claude + Codex) governance pack with state-artifact pipeline (PLAN/TEST/REVIEW/HANDOFF), role registry, continuity checkpoints, and runtime guardrails (Claude only). Codex users continue using the bootstrap installer in the same repo."
     },
     {
       "name": "possiblaw-vibe",
       "source": "./possiblaw-vibe",
-      "version": "1.4.1",
-      "description": "Discovery-first project planning for non-coders."
+      "version": "2.0.0",
+      "description": "Legal-app design grill in the spirit of Matt Pocock's grill-me skill. Walks document systems, software systems, workflows, data model, and integrations through relentless interrogation until the spec is real."
     }
   ]
 }

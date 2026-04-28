@@ -1,11 +1,17 @@
 # PossibLaw Plugins
 
-Claude Code plugins built by the PossibLaw team.
+PossibLaw plugin marketplace for Claude Code. Distributes our dual-host starter pack and the legal-app design grill plugin.
 
 ## Runtime Support
 
-- **Claude Code:** Full plugin install support via marketplace (`claude plugin install ...`).
-- **Codex:** Not installable as Claude plugins. Use the plugin docs/workflows directly in Codex, and configure required MCP servers with `codex mcp ...`.
+- **Claude Code:** Full plugin install support via marketplace (`/plugin install ...`).
+- **Codex:** Claude plugins are not installed directly. Use `PossibLaw-Agent-Starter-Pack` for the canonical host-agnostic contract; Codex users install via the bootstrap installer in that same repo.
+
+## Repository Boundary
+
+- `PossibLaw-Agent-Starter-Pack` owns host-agnostic roles, delivery contracts, the state-artifact pipeline (PLAN/TEST/REVIEW/HANDOFF), continuity checkpoints, and now the runtime guardrails (Claude only).
+- `Plugins` (this repo) owns Claude marketplace packaging — currently a thin catalog that points at the starter pack and ships the legal-app design grill.
+- If a workflow needs to work the same way in both Codex and Claude Code, define the contract in the Starter Pack first.
 
 ## About PossibLaw
 
@@ -13,77 +19,52 @@ PossibLaw helps legal professionals become Builders. Architect Legal Professiona
 
 - Subscribe to our [Substack](https://www.possiblaw.com) for field notes on AI, teams, and transformation.
 - Learn to think like a developer with [LexPair](https://www.lexpair.ai).
-- Bring in [Lumen Atlas](https://https://www.possiblaw.com/p/consulting) for hands-on AI training and workflow coaching.
+- Bring in [Lumen Atlas](https://www.possiblaw.com/p/consulting) for hands-on AI training and workflow coaching.
 
 We're ReCoding the Vibe in legal.
 
-## Available Plugins
+## Plugins
 
-### possiblaw-build-plugin
+### possiblaw-starter (v2.0.0)
 
-Interactive plugin builder for Claude Code. Use `/possiblaw-build-plugin:build-plugin` to launch guided plugin creation. It asks targeted questions to determine the right extensibility mechanism — CLAUDE.md files, skills, commands, hooks, or agents — then generates properly structured files following documented patterns.
-
-```bash
-claude plugin install possiblaw-build-plugin@possiblaw-plugins
-```
-
-### possiblaw-guardrails
-
-General-purpose safety hooks for Claude Code. Blocks destructive commands (`rm -rf`, `sudo rm`, `curl | bash`, force-push to main), protects sensitive files (`.env`, SSH keys, credentials), auto-formats code after writes, and validates task completion before sessions end. Ships with a curated blacklist and escalation prompts for risky-but-not-fatal commands.
+Dual-host (Claude + Codex) governance pack with state-artifact pipeline (PLAN/TEST/REVIEW/HANDOFF), role registry, continuity checkpoints, and runtime guardrails (Claude only). Sourced from [`PossibLaw/agent-starter-pack`](https://github.com/PossibLaw/agent-starter-pack). Codex users continue using the bootstrap installer in that repo.
 
 ```bash
-claude plugin install possiblaw-guardrails@possiblaw-plugins
+/plugin install possiblaw-starter@possiblaw-plugins
 ```
 
-### possiblaw-legal
+### possiblaw-vibe (v2.0.0)
 
-Single-command legal retrieval plugin for novice builders. `/possiblaw-legal:legal` now asks users whether to search `Skills`, `ContractCodex`, `SEC EDGAR`, or `All`, then returns either top skill matches or a prompt-ready evidence pack with citations. It includes a runtime entrypoint for tool wrappers: `possiblaw-legal/retrieval/run-search.mjs`.
+Legal-app design grill in the spirit of Matt Pocock's grill-me skill. Walks document systems, software systems, workflows, data model, and integrations through relentless interrogation until the spec is real. Built for legal professionals architecting practice tooling, document automation, client portals, compliance systems, and beyond.
 
 ```bash
-claude plugin install possiblaw-legal@possiblaw-plugins
+/plugin install possiblaw-vibe@possiblaw-plugins
 ```
 
-### possiblaw-vibe
-
-Discovery-first project planning for non-coders. Use `/possiblaw-vibe:vibe-coding` to guide goal definition, budget constraints, and tech stack selection, then generate a complete dev environment with docs, helper scripts, and a debugging agent.
+## Install
 
 ```bash
-claude plugin install possiblaw-vibe@possiblaw-plugins
+/plugin marketplace add PossibLaw/PossibLaw-Plugins
+/plugin install possiblaw-starter@possiblaw-plugins
+/plugin install possiblaw-vibe@possiblaw-plugins
 ```
 
-## Getting Started
-
-### Option A: Using the interactive UI
-
-1. Open Claude Code and type `/plugin`
-2. Press the **right arrow key** to navigate to the **Discover** tab
-3. Select **Add Marketplace**
-4. Enter the GitHub repo: `PossibLaw/PossibLaw-Plugins`
-5. Once added, browse the marketplace and install any plugin from the list
-
-### Option B: Using the command line
-
-First, add the `possiblaw-plugins` marketplace:
+If you previously added the marketplace under a different name, remove it and re-add so Claude picks up the renamed marketplace:
 
 ```bash
-claude plugin marketplace add https://github.com/PossibLaw/PossibLaw-Plugins.git
+/plugin marketplace remove possiblaw-plugins || true
+/plugin marketplace add PossibLaw/PossibLaw-Plugins
 ```
 
-If you previously added the old marketplace name (`PossibLaw`), remove it and re-add so Claude picks up the renamed marketplace:
+## What was here previously
 
-```bash
-claude plugin marketplace remove PossibLaw || true
-claude plugin marketplace add https://github.com/PossibLaw/PossibLaw-Plugins.git
-```
+On 2026-04-28 the marketplace was collapsed from four plugins to two:
 
-Then install any plugin:
+- `possiblaw-build-plugin` — retired. The interactive plugin builder is no longer maintained as a separate package.
+- `possiblaw-legal` — retired as a standalone plugin. Its retrieval scaffolds (the verbatim `*.mjs` runtime entrypoints for Skills, ContractCodex, and SEC EDGAR) live on inside `possiblaw-vibe/references/scaffolds/_source/` and are referenced by the design grill when a stack calls for legal retrieval.
+- `possiblaw-guardrails` — absorbed into `possiblaw-starter` v2.0.0. The safety hooks that previously shipped here are now part of the starter pack's Claude runtime layer.
 
-```bash
-claude plugin install possiblaw-build-plugin@possiblaw-plugins
-claude plugin install possiblaw-guardrails@possiblaw-plugins
-claude plugin install possiblaw-legal@possiblaw-plugins
-claude plugin install possiblaw-vibe@possiblaw-plugins
-```
+The `archive/before-cleanup-2026-04-28` git tag in this repo preserves the previous tree state in full if you ever need to recover the retired packages.
 
 ## Release Validation
 
@@ -94,26 +75,7 @@ Before publishing plugin changes, run:
 ```
 
 This enforces:
-- Unique `plugin.json` names across all marketplace plugins
-- `plugin.json` `name` matches each marketplace plugin ID
+- Plugin manifests exist and resolve for relative-path sources
+- `plugin.json` `name` matches each marketplace plugin ID for local plugins
 - Non-empty plugin versions
-
-## What's Next
-
-More plugins are on the way to help legal professionals architect what's next in legal. Stay tuned.
-
-## Using These in Codex
-
-These packages are authored in Claude plugin format, so Codex does not install them with `claude plugin install`.
-
-Use this pattern instead:
-
-1. Open the plugin's workflow docs and run the same process in Codex.
-2. Configure any external MCP dependency in Codex (example for legal skills):
-   `codex mcp add agentskills --url https://skills.case.dev/api/mcp`
-3. In Codex prompts, explicitly request that workflow (example: "Use the legal workflow from this repo and show top 5 skills for contract review").
-
-For possiblaw-legal specifically, see:
-- `possiblaw-legal/docs/codex-usage.md`
-- `possiblaw-legal/docs/agent-contract.md`
-- `possiblaw-legal/retrieval/README.md`
+- Remote (github/url/git-subdir/npm) sources have a pinned `version` in the marketplace entry
