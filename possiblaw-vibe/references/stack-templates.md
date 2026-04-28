@@ -2,6 +2,13 @@
 
 Pre-built CLAUDE.md templates for common tech stacks. Customize based on project specifics.
 
+For legal apps, after picking the stack template, layer in the legal-tech non-negotiables from `references/legal-tech-patterns.md` -- privilege flags, retention policy, audit log, conflict-check pipeline, court-deadline transparency, citation handling, privilege-aware LLM defaults. The stack template gives you the boilerplate; the patterns doc gives you the spine.
+
+Default recommendations by audience:
+- **Solo / small firm legal app**: Next.js + Supabase template (Postgres RLS for tenancy, Supabase Auth for SSO, Storage for documents) plus the legal-tech patterns layer.
+- **Mid-market legal app**: FastAPI template if Python-heavy AI work; Next.js + Supabase if web-first.
+- **Document-intensive legal app**: Next.js + Supabase + S3/R2 for blobs; layer in `references/scaffolds/` adapters where retrieval is needed.
+
 ---
 
 ## Template: Next.js + Supabase

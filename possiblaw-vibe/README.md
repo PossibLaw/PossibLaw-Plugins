@@ -1,127 +1,107 @@
 # possiblaw-vibe
 
-Discovery-first project planning for non-coders. Guides you through defining your project goals, budget constraints, and tech stack — then generates a complete dev environment with docs, helper scripts, a debugging agent, and slash commands.
+Legal-app design grill. Walks document systems, software systems, and workflows through relentless interrogation until your spec is real.
 
-## Installation
+## What it is
 
-**Option A: Install from a marketplace** (recommended)
+`possiblaw-vibe` is a Claude Code plugin that interrogates you through the design of a legal app -- document automation, client portal, practice management, compliance, litigation support, conflict-check tools, contract review, e-discovery, anything legal-tech. It refuses to write code until the design tree resolves.
 
-If you have a local plugin marketplace (a folder with `.claude-plugin/marketplace.json`), register it once and install:
+The style is deliberately modeled on Matt Pocock's `grill-me` skill (see ["My grill-me skill has gone viral"](https://www.aihero.dev/my-grill-me-skill-has-gone-viral)). Same discipline:
+
+- Sessions run roughly 45 minutes. Output is shared understanding plus written deliverables.
+- Each question is sharp and load-bearing. No filler.
+- One branch at a time. Resolve dependencies before moving on.
+- For obvious calls, the agent recommends a default so you can just say "yes."
+- Refuses to scaffold or write code until the tree is resolved.
+
+We narrowed the scope to legal apps and added targeted branches for legal-specific concerns: attorney-client privilege (ABA Model Rule 1.6), retention, e-discovery readiness, conflict checks, citations, court-deadline transparency, e-signature, trust accounting (IOLTA), privilege-aware LLM integration.
+
+## Who it's for
+
+- Legal professionals (attorneys, paralegals, legal ops) building practice tooling.
+- Lawyer-engineers and engineers working with lawyers on legal-tech.
+- Anyone who needs a real spec before writing a line of code -- not a vague Notion doc.
+
+## Install
 
 ```bash
-/plugin marketplace add /path/to/your/plugins-folder
-/plugin install possiblaw-vibe@your-marketplace-name
+/plugin marketplace add PossibLaw/PossibLaw-Plugins
+/plugin install possiblaw-vibe@possiblaw-plugins
 ```
 
-Or use the interactive UI — run `/plugin`, go to the **Discover** tab, and install from there. Once installed, `/possiblaw-vibe` is available in every project.
-
-**Option B: Copy the command directly**
+## Use
 
 ```bash
-cp /path/to/possiblaw-vibe/commands/possiblaw-vibe.md ~/.claude/commands/
-```
-
-Note: Option B gives you the `/possiblaw-vibe` command but not the reference templates. The plugin install (Option A) includes everything.
-
-## Usage
-
-```bash
-/possiblaw-vibe
+/possiblaw-vibe:vibe-coding
 ```
 
 Or with a starting idea:
 
 ```bash
-/possiblaw-vibe I want to build a todo app with AI features
+/possiblaw-vibe:vibe-coding I want to build a contract review tool for a small commercial-litigation firm
 ```
 
-## What It Does
+## The five branches
 
-The `/possiblaw-vibe` command guides you through project discovery:
+The grill walks every legal-app design through these branches in order. It recommends defaults; you confirm or push back.
 
-### Phase 1: Vision
-- What do you want to build?
-- Who is it for?
-- What problem does it solve?
+1. **Document systems.** What documents, who creates and edits, lifecycle, versioning, templating, storage, search, citation handling, privilege markings, retention, e-signature.
+2. **Software systems.** Audience, tenancy, auth, authorization, audit, compliance posture (SOC 2, HIPAA, ABA Model Rule 1.6, GDPR), data residency, platform shape, notifications, real-time collab, export.
+3. **Workflows.** Matter intake -> conflict check -> engagement -> onboarding -> work -> close-out. Review cycles, approval chains, deadline tracking with computation transparency, time / billing, trust accounting (IOLTA), e-filing, service of process.
+4. **Data model.** Core entities (Client, Matter, Document, Event, Task, User), relationships, document metadata, audit log, soft-delete vs hard-delete, litigation hold, privilege model, retention model, search index considerations, multi-tenancy.
+5. **Integrations.** E-signature (HelloSign / DocuSign / Adobe / PandaDoc), e-filing (PACER, state EFMs, One Legal), CRM (Clio Grow, Lawmatics), document storage (S3, R2, Box, NetDocuments, iManage), practice management (Clio Manage, MyCase, PracticePanther), accounting (QuickBooks, LawPay, LeanLaw), email (Outlook, Gmail), court calendar (LawToolBox, CourtRules), AI / LLM (Anthropic, OpenAI, Bedrock).
 
-### Phase 2: Technical Baseline
-- Do you know your tech stack?
-- If yes: validate your choices
-- If no: discover through budget questions
+## What it produces
 
-### Phase 3: Requirements
-- Feature-specific questions based on project type
-- Auth, real-time, mobile, admin needs
-- Tooling level: Minimal (docs only), Standard (full environment), or Custom
+After all five branches resolve and you confirm scope:
 
-### Phase 4: Architecture
-- Tech stack recommendation with cost estimates
-- Tradeoffs and growth path
+- `docs/PRD.md` -- product requirements with the resolved branch answers baked in
+- `CLAUDE.md` -- project foundation
+- `docs/architecture.md` -- assembled by the `legal-app-architect` agent with privilege, retention, conflict-check, audit, and citation rigor called out
+- `docs/setup.md` -- dev environment setup
+- `docs/getting-started.md` -- quick-start workflow guide
+- helper scripts in `scripts/` (`setup.sh`, `dev.sh`, `test.sh`, `lint.sh`)
+- dev-helper agent at `.claude/agents/dev-helper.md`
+- slash commands at `.claude/commands/` (`/review`, `/test-runner`, `/setup`, `/getting-started`)
+- retrieval scaffolds from `references/scaffolds/` wired in where applicable (e.g., SEC EDGAR adapter for filings retrieval, contract-clause adapters for ContractCodex-style retrieval)
 
-### Phase 5: Generate
-- PRD/Spec document (`docs/PRD.md`)
-- CLAUDE.md (project foundation)
-- Reference docs (`docs/architecture.md`, `docs/setup.md`)
-- Getting-started guide (`docs/getting-started.md`)
-- Helper scripts (`scripts/setup.sh`, `dev.sh`, `test.sh`, `lint.sh`)
-- Dev-helper agent (`.claude/agents/dev-helper.md`)
-- Slash commands (`/review`, `/test-runner`, `/setup`, `/getting-started`)
+## Why grill style
 
-### Phase 6: Handoff
-- All files written and scripts made executable
-- "What's next" guidance pointing to the getting-started guide
+Vague specs ship vague apps. Legal apps especially fail in the details: a missed retention rule, a privilege flag that doesn't propagate to search, a deadline computation that doesn't show its math. The grill style forces those details to surface before code is written.
 
-## Philosophy
+Credit where due: this style is modeled on Matt Pocock's `grill-me` skill ([source](https://github.com/mattpocock/skills) / [write-up](https://www.aihero.dev/my-grill-me-skill-has-gone-viral)). The legal-tech specialization is ours.
 
-**Non-coders welcome.** This plugin assumes you might not know:
-- What language to use
-- What hosting costs
-- What "database" even means
+## Legal-tech patterns enforced
 
-It starts with YOUR goals and works backward to technical decisions.
+The grill loads `references/legal-tech-patterns.md` before asking the first question. Every branch enforces:
 
-**Budget-first thinking.** Free tiers exist for almost everything. We don't recommend paid services unless necessary.
+- **Attorney-client privilege (ABA Model Rule 1.6).** Per-document privilege flag, audit trail on every flag change, privilege-log generation, surfacing privilege-waiver trade-offs before any third-party LLM call.
+- **Retention.** Per-matter `retention_until` and `retention_reason`, soft delete by default, hard delete admin-only and audited.
+- **E-discovery readiness.** Append-only hash-chained audit log, sha256 hashes per document version, BATES via `production` join entity, native + load-file export.
+- **Conflict checks.** Triggered on every new client, new matter, new party, related matter, plus annual sweep. Fuzzy matching plus human attorney sign-off. Ethics walls as deny-ACL.
+- **Trust accounting / IOLTA.** Pooled trust + per-client-matter sub-ledgers, never commingled, three-way reconciliation, DB-level invariants.
+- **Citation rigor.** Structured citation objects, Bluebook render on output, parallel citations preserved, citator status displayed.
+- **Court-deadline transparency.** Every deadline rendered with the source rule and the computation -- never just a date.
+- **Privilege-aware LLMs.** BAA / DPA before any privileged content; redaction defaults; first-time consent UX with logged acknowledgment; per-matter cost allocation.
 
-**Simplicity wins.** Fewer moving parts = fewer things to break. We recommend mainstream, well-documented stacks.
+Litigation hold beats retention. Retention beats convenience. Privilege beats everything.
 
 ## Components
 
 | Component | Purpose |
 |-----------|---------|
-| `/possiblaw-vibe` command | Main discovery questionnaire |
-| `project-architect` agent | Tech stack advisor with cost knowledge |
-| `references/stack-options.md` | Comprehensive stack guide by budget |
-| `references/stack-templates.md` | CLAUDE.md templates for common stacks |
+| `/possiblaw-vibe:vibe-coding` command | Entry into the grill |
+| `vibe` agent | The grill agent persona |
+| `legal-app-architect` agent | Assembles `docs/architecture.md` after the grill resolves |
+| `skills/grill-legal-app/SKILL.md` | The grill's operating manual |
+| `skills/grill-legal-app/references/*.md` | Branch question backbones (document systems, software systems, workflows, data model, integrations) |
+| `references/legal-tech-patterns.md` | Non-negotiables enforced across every branch |
+| `references/stack-options.md` | Stack guide with legal-tech cost ranges |
+| `references/stack-templates.md` | CLAUDE.md templates per stack |
 | `references/script-templates.md` | Shell script templates by stack |
-| `references/agent-templates.md` | Dev-helper agent templates by stack |
+| `references/agent-templates.md` | Dev-helper agent templates |
 | `references/command-templates.md` | Slash command templates |
-
-## Example Output
-
-After running `/possiblaw-vibe` with Standard tooling, you'll have:
-
-```
-your-project/
-├── CLAUDE.md                          # Project foundation for Claude Code
-├── docs/
-│   ├── PRD.md                         # Product requirements document
-│   ├── architecture.md                # How the pieces fit together
-│   ├── setup.md                       # Detailed setup instructions
-│   └── getting-started.md             # Quick-start workflow guide
-├── scripts/
-│   ├── setup.sh                       # Install deps, init project
-│   ├── dev.sh                         # Start dev server
-│   ├── test.sh                        # Run tests
-│   └── lint.sh                        # Lint and format code
-└── .claude/
-    ├── agents/
-    │   └── dev-helper.md              # Debugging assistant agent
-    └── commands/
-        ├── review.md                  # Code review against standards
-        ├── test-runner.md             # Run and explain test results
-        ├── setup.md                   # Project setup helper
-        └── getting-started.md         # Show workflow guide
-```
+| `references/scaffolds/` | Retrieval scaffolds (SEC EDGAR, contract clauses, vector search) wired in when the design surfaces retrieval needs |
 
 ## License
 

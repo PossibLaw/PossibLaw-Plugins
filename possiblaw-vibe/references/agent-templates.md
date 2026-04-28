@@ -2,6 +2,8 @@
 
 Pre-built agent templates for common tech stacks. The dev-helper agent lives at `.claude/agents/dev-helper.md` and assists users with debugging, explanations, and project-specific guidance.
 
+For legal apps, extend the chosen stack template with a legal-tech awareness section: the agent should know the project enforces privilege flags, retention rules, conflict checks, audit logging, and court-deadline transparency (per `references/legal-tech-patterns.md`). When debugging, the dev-helper should never recommend hard-deleting matter or document data, never bypass RLS / privilege filters, and never paste privileged content into a third-party tool without checking the project's LLM consent flow.
+
 ---
 
 ## Common Structure

@@ -23,8 +23,30 @@ echo "Validating $plugin_count marketplace plugin(s)..."
 
 while IFS= read -r plugin_entry; do
   plugin_id="$(jq -r '.name' <<<"$plugin_entry")"
-  plugin_source="$(jq -r '.source' <<<"$plugin_entry")"
+  source_type="$(jq -r '.source | type' <<<"$plugin_entry")"
   marketplace_version="$(jq -r '.version // empty' <<<"$plugin_entry")"
+
+  # Marketplace plugin sources can be a relative-path string (e.g. "./my-plugin")
+  # or an object describing a remote source (github, url, git-subdir, npm).
+  # We only fully validate locally-resolvable, relative-path sources here.
+  if [[ "$source_type" == "string" ]]; then
+    plugin_source="$(jq -r '.source' <<<"$plugin_entry")"
+    if [[ "$plugin_source" != ./* ]]; then
+      echo "OK: $plugin_id (remote string source: $plugin_source)"
+      continue
+    fi
+  else
+    # Object source — remote (github/url/git-subdir/npm). Skip local manifest checks.
+    remote_kind="$(jq -r '.source.source // .source.type // "remote"' <<<"$plugin_entry")"
+    if [[ -z "$marketplace_version" ]]; then
+      echo "ERROR: '$plugin_id' (remote source: $remote_kind) is missing .version in $MARKETPLACE_MANIFEST" >&2
+      errors=1
+      continue
+    fi
+    echo "OK: $plugin_id (remote $remote_kind source, version $marketplace_version)"
+    continue
+  fi
+
   plugin_dir="$ROOT_DIR/${plugin_source#./}"
   plugin_manifest="$plugin_dir/.claude-plugin/plugin.json"
 
