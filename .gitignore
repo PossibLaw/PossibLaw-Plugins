@@ -12,3 +12,7 @@ TROUBLESHOOTING.md
 # Shared release continuity; private runtime files remain excluded.
 !.agent/
 !.agent/*.md
+
+!.agent/archives/
+.agent/archives/*
+!.agent/archives/*.md
