@@ -8,3 +8,7 @@ __pycache__/
 HANDOFF.md
 TROUBLESHOOTING.md
 .claude/history.md
+
+# Shared release continuity; private runtime files remain excluded.
+!.agent/
+!.agent/*.md
