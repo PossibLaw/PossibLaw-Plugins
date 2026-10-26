@@ -13,7 +13,7 @@
         "source": "url",
         "url": "https://github.com/PossibLaw/possibnow-dev-harness.git"
       },
-      "version": "4.3.0",
+      "version": "4.3.1",
       "description": "PossibNow Dev Harness: reviewed project optimization, current HANDOFF plus historical HISTORY, shared continuity delivery, progressive context loading, and Claude and Codex runtime guardrails, Orca worktree setup, task-to-issue sync, work router and autonomy dispatcher. Cross-tool project workflows via AGENTS.md; /possibnow-dev-harness:optimize in Claude Code."
     },
     {
